@@ -1,0 +1,8 @@
+name: DVHSiegeItem
+version: '$version'
+main: com.danvhae.minecraft.siege.item.DVHSiegeItem
+api-version: 1.12.2
+authors: [해야, 보라비, 단츄, 로미오는줄리엣]
+description: 꿈뻑 공성전 콘텐츠 아이템 제어 플러그인
+website: https:cafe.naver.com/danvhae
+depend: [Vault]

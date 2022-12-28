@@ -31,6 +31,8 @@ dependencies {
     testImplementation(kotlin("test"))
     compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
+
+    compileOnly(files(env.fetch("DVH_SIEGE_CORE")))
 }
 
 tasks.test {

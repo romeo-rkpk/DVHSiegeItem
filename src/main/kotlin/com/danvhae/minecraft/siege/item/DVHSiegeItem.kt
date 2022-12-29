@@ -1,8 +1,10 @@
 package com.danvhae.minecraft.siege.item
 
 import com.danvhae.minecraft.siege.item.commands.ExpCoinItemCommand
+import com.danvhae.minecraft.siege.item.commands.MoneyCommand
 import com.danvhae.minecraft.siege.item.commands.SiegeSpellItemCommand
 import com.danvhae.minecraft.siege.item.commands.TicketItemCommand
+import com.danvhae.minecraft.siege.item.completers.MoneyCompleter
 import com.danvhae.minecraft.siege.item.completers.SpellItemCompleter
 import com.danvhae.minecraft.siege.item.completers.TicketCompleter
 import com.danvhae.minecraft.siege.item.listeners.*
@@ -38,6 +40,9 @@ class DVHSiegeItem : JavaPlugin(){
         getCommand("ticket-item").tabCompleter = TicketCompleter()
 
         getCommand("exp-coin").executor = ExpCoinItemCommand()
+
+        getCommand("스타").executor = MoneyCommand()
+        getCommand("스타").tabCompleter = MoneyCompleter()
     }
 
 }

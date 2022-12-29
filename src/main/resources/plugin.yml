@@ -8,6 +8,8 @@ website: https:cafe.naver.com/danvhae
 depend: [Vault, DVHSiegeCore, MagicSpells]
 
 commands:
+  스타:
+    description: 돈 명령어
   siege-spell-item:
     description: 스펠 아이템 생성 명령어
   ticket-item:

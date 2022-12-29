@@ -4,6 +4,7 @@ import com.danvhae.minecraft.siege.core.DVHSiegeCore
 import com.danvhae.minecraft.siege.core.utils.TextUtil
 import com.danvhae.minecraft.siege.item.DVHSiegeItem
 import com.danvhae.minecraft.siege.item.abstracts.TicketAbstract
+import com.danvhae.minecraft.siege.item.utils.ItemUtil
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Material
@@ -55,25 +56,12 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
 
     }
     override fun useAndTeleport(player: Player) {
-        val compareItem = toItemStack()
 
-        val ticketItem = player.inventory.itemInMainHand.let {if(it.isSimilar(compareItem)) it else {
-            var target:ItemStack? = null
-            inner@for(item in player.inventory){
-                item?:continue
-                if(item.isSimilar(compareItem)){
-                    target = compareItem
-                    break@inner
-                }
-            }
-            target
-        } }
-
+        val ticketItem = ItemUtil.targetItem(player, toItemStack())
         if(ticketItem == null){
             player.sendMessage("정말 티켓을 가지고 있는 것이 맞습니까?")
             return
         }
-
         ticketItem.amount--
 
         val info = WildTicketInfo(player.uniqueId, minutes)

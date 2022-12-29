@@ -29,6 +29,6 @@ class ChequeListener : Listener {
 
         DVHSiegeCore.economy!!.depositPlayer(event.player, cheque.amount.toDouble())
         event.player.sendMessage("수표를 사용하여 ${amount}(${NumberUtil.numberToHangul(amount)})스타" +
-                "를 얻었습니다.${cheque.footNote?.let { " (${it})" }}")
+                "를 얻었습니다.")
     }
 }

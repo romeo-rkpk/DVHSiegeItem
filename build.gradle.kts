@@ -33,6 +33,7 @@ dependencies {
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
 
     compileOnly(files(env.fetch("DVH_SIEGE_CORE")))
+    compileOnly(files(env.fetch("MAGIC_SPELL")))
 }
 
 tasks.test {

@@ -28,6 +28,7 @@ class DVHSiegeItem : JavaPlugin(){
         pm.registerEvents(AbortWildListener(), this)
         pm.registerEvents(PlayerDeathWithKeepItemListener(), this)
         pm.registerEvents(ChequeListener(), this)
+        pm.registerEvents(ExpCoinUseListener(), this)
 
         getCommand("siege-spell-item").executor = SiegeSpellItemCommand()
         getCommand("siege-spell-item").tabCompleter = SpellItemCompleter()

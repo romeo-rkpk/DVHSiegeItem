@@ -1,4 +1,4 @@
-package com.danvhae.minecraft.siege.item.items
+package com.danvhae.minecraft.siege.item.items.tickets
 
 import com.danvhae.minecraft.siege.core.DVHSiegeCore
 import com.danvhae.minecraft.siege.core.utils.TextUtil
@@ -44,7 +44,7 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
 
         private const val MINUTE_LINE = 2
 
-        fun parseItem(stack:ItemStack?):WildTicket?{
+        fun parseItem(stack:ItemStack?): WildTicket?{
             stack?.let{if(it.type != TYPE)return null}?:return null
             val meta = stack.itemMeta
             meta.lore.let {

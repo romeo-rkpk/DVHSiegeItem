@@ -1,4 +1,4 @@
-package com.danvhae.minecraft.siege.item.items
+package com.danvhae.minecraft.siege.item.items.tickets
 
 import com.danvhae.minecraft.siege.core.enums.SiegeCastleStatus
 import com.danvhae.minecraft.siege.core.objects.SiegeCastle

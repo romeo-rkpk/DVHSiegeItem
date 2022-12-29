@@ -1,15 +1,12 @@
 package com.danvhae.minecraft.siege.item.abstracts
 
-import com.danvhae.minecraft.siege.core.DVHSiegeCore
 import com.danvhae.minecraft.siege.core.objects.SiegeCastle
 import com.danvhae.minecraft.siege.core.utils.Hangul
 import com.danvhae.minecraft.siege.core.utils.TextUtil
-import com.danvhae.minecraft.siege.item.items.AttackTicket
-import com.danvhae.minecraft.siege.item.items.WorkTicket
+import com.danvhae.minecraft.siege.item.items.tickets.AttackTicket
+import com.danvhae.minecraft.siege.item.items.tickets.WorkTicket
 import org.bukkit.Material
-import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import sun.security.krb5.internal.Ticket
 
 abstract class StarTicketAbstract(val destination:SiegeCastle) :TicketAbstract() {
 

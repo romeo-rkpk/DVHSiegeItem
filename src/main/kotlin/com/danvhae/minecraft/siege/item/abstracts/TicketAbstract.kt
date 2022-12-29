@@ -1,9 +1,9 @@
 package com.danvhae.minecraft.siege.item.abstracts
 
 import com.danvhae.minecraft.siege.core.objects.SiegeCastle
-import com.danvhae.minecraft.siege.item.items.AttackTicket
-import com.danvhae.minecraft.siege.item.items.WildTicket
-import com.danvhae.minecraft.siege.item.items.WorkTicket
+import com.danvhae.minecraft.siege.item.items.tickets.AttackTicket
+import com.danvhae.minecraft.siege.item.items.tickets.WildTicket
+import com.danvhae.minecraft.siege.item.items.tickets.WorkTicket
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 

@@ -3,6 +3,7 @@ package com.danvhae.minecraft.siege.item.items.tickets
 import com.danvhae.minecraft.siege.core.enums.SiegeCastleStatus
 import com.danvhae.minecraft.siege.core.objects.SiegeCastle
 import com.danvhae.minecraft.siege.item.abstracts.StarTicketAbstract
+import com.danvhae.minecraft.siege.item.utils.ItemUtil
 import org.bukkit.entity.Player
 
 class AttackTicket(destination:SiegeCastle) : StarTicketAbstract(destination) {
@@ -15,6 +16,7 @@ class AttackTicket(destination:SiegeCastle) : StarTicketAbstract(destination) {
             return
         }
 
+        ItemUtil.targetItem(player, toItemStack())?.let { it.amount-- }
         player.teleport(destination.attackPosition)
     }
 }

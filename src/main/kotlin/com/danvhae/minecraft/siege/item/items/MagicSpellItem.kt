@@ -17,6 +17,7 @@ internal class MagicSpellItem(val name:String, val lore:List<String>, val skillI
 
     companion object{
         private val COOL_DOWN = HashMap<Pair<String, UUID>, LocalDateTime>()
+
         val WINGS2 = MagicSpellItem(TextUtil.toColor("&b비상"),
             listOf(TextUtil.toColor(" &7--------------------------------------"),
                 "",
@@ -46,11 +47,20 @@ internal class MagicSpellItem(val name:String, val lore:List<String>, val skillI
             TextUtil.toColor("&f[일회용]")
         ), "neverDummy", 60, Material.SPECKLED_MELON)
 
+        val items = mapOf(
+            Pair(WINGS2.skillID, WINGS2),
+            Pair(BACKSTEP.skillID, BACKSTEP),
+            Pair(NEVERDUMMY.skillID, NEVERDUMMY)
+        )
 
         fun parseItem(stack:ItemStack) : MagicSpellItem?{
             for(item in listOf(WINGS2, BACKSTEP, NEVERDUMMY))
                 item.let { if(stack.isSimilar(it.toItemStack())) return it }
             return null
+        }
+
+        fun forceCooling(){
+            COOL_DOWN.clear()
         }
     }
 

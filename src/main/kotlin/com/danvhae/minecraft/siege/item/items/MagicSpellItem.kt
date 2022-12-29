@@ -79,8 +79,8 @@ internal class MagicSpellItem(val name:String, val lore:List<String>, val skillI
             spell.cast(player)
             //player.performCommand("c $skillID")
             COOL_DOWN[key] = now
+            item.amount--
         }
-        item.amount--
 
         return max(remain, 0)
     }

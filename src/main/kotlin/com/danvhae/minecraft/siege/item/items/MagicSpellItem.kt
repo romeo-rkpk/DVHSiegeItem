@@ -78,7 +78,7 @@ internal class MagicSpellItem(val name:String, val lore:List<String>, val skillI
             val spell = MagicSpells.getSpellByInternalName(skillID)
             spell.cast(player)
             //player.performCommand("c $skillID")
-            COOL_DOWN[key]
+            COOL_DOWN[key] = now
         }
         item.amount--
 

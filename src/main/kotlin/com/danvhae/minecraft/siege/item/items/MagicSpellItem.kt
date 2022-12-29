@@ -78,6 +78,7 @@ internal class MagicSpellItem(val name:String, val lore:List<String>, val skillI
         val result = ItemStack(type)
         val meta = result.itemMeta
         meta.displayName = name; meta.lore = lore
+        result.itemMeta = meta
         return result
     }
 }

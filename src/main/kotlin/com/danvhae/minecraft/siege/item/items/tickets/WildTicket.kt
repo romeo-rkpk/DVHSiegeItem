@@ -70,7 +70,12 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
     }
 
     override fun toItemStack(): ItemStack {
-        TODO("Not yet implemented")
+        val stack = ItemStack(TYPE)
+        val meta = stack.itemMeta
+        meta.displayName = NAME
+        meta.lore = lore(minutes)
+        stack.itemMeta = meta
+        return stack
     }
 
     private class WildTicketInfo(val uuid:UUID, val allowedMinutes:Int){

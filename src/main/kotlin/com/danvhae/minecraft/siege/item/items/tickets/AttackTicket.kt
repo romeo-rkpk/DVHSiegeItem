@@ -2,6 +2,7 @@ package com.danvhae.minecraft.siege.item.items.tickets
 
 import com.danvhae.minecraft.siege.core.enums.SiegeCastleStatus
 import com.danvhae.minecraft.siege.core.objects.SiegeCastle
+import com.danvhae.minecraft.siege.core.utils.Hangul
 import com.danvhae.minecraft.siege.item.abstracts.StarTicketAbstract
 import com.danvhae.minecraft.siege.item.utils.ItemUtil
 import org.bukkit.entity.Player
@@ -17,6 +18,16 @@ class AttackTicket(destination:SiegeCastle) : StarTicketAbstract(destination) {
         }
 
         ItemUtil.targetItem(player, toItemStack())?.let { it.amount-- }
+        val hangul = Hangul(destination.name.last())
+        player.sendMessage("${destination.name}%s 공격하러 갑니다".format(
+            if(hangul.isHangul()){
+                if(hangul.last() != null)
+                    "을"
+                else
+                    "를"
+            }else
+                ""
+        ))
         player.teleport(destination.attackPosition)
     }
 }

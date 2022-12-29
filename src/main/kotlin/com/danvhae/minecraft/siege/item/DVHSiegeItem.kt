@@ -1,5 +1,6 @@
 package com.danvhae.minecraft.siege.item
 
+import com.danvhae.minecraft.siege.item.commands.ExpCoinItemCommand
 import com.danvhae.minecraft.siege.item.commands.SiegeSpellItemCommand
 import com.danvhae.minecraft.siege.item.commands.TicketItemCommand
 import com.danvhae.minecraft.siege.item.completers.SpellItemCompleter
@@ -35,6 +36,8 @@ class DVHSiegeItem : JavaPlugin(){
 
         getCommand("ticket-item").executor = TicketItemCommand()
         getCommand("ticket-item").tabCompleter = TicketCompleter()
+
+        getCommand("exp-coin").executor = ExpCoinItemCommand()
     }
 
 }

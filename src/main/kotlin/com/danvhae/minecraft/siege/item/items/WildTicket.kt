@@ -5,6 +5,7 @@ import com.danvhae.minecraft.siege.core.utils.TextUtil
 import com.danvhae.minecraft.siege.item.DVHSiegeItem
 import com.danvhae.minecraft.siege.item.abstracts.TicketAbstract
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.boss.BarColor
 import org.bukkit.boss.BarFlag
@@ -16,16 +17,68 @@ import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.math.max
 
-class WildTicket : TicketAbstract(){
+class WildTicket(val minutes:Int) : TicketAbstract(){
     companion object{
         private val TYPE = Material.PAPER
         private val NAME:String = TextUtil.toColor("&a&l야생티켓")
         private val regex = Regex("야생에서 (\\d+)분 머무를 수 있는 티켓")
 
+        private val wildTicketUsing = HashMap<UUID, WildTicketInfo>()
+
+        fun abortWhenUsing(player:Player){
+            wildTicketUsing[player.uniqueId]?.let {
+                it.abort()
+                player.sendMessage("사용중이던 야생 티켓은 보상되지 않습니다")
+            }
+        }
+
+        private fun lore(minute:Int):List<String>{
+            return listOf(
+                TextUtil.toColor("&f야생으로 이동합니다."),
+                TextUtil.toColor("&7&o 잘 다녀오세요"),
+                TextUtil.toColor("&7${minute}분 머무를 수 있는 티켓"),
+                TextUtil.toColor("")
+            )
+        }
+
+        private const val MINUTE_LINE = 2
+
+        fun parseItem(stack:ItemStack?):WildTicket?{
+            stack?.let{if(it.type != TYPE)return null}?:return null
+            val meta = stack.itemMeta
+            meta.lore.let {
+                if(it.size != lore(0).size) return null
+                val (minutes) = regex.find(ChatColor.stripColor(it[MINUTE_LINE]))?.destructured?:return null
+                return WildTicket(minutes.toIntOrNull()?:return null)
+            }
+        }
 
     }
     override fun useAndTeleport(player: Player) {
-        TODO("Not yet implemented")
+        val compareItem = toItemStack()
+
+        val ticketItem = player.inventory.itemInMainHand.let {if(it.isSimilar(compareItem)) it else {
+            var target:ItemStack? = null
+            inner@for(item in player.inventory){
+                item?:continue
+                if(item.isSimilar(compareItem)){
+                    target = compareItem
+                    break@inner
+                }
+            }
+            target
+        } }
+
+        if(ticketItem == null){
+            player.sendMessage("정말 티켓을 가지고 있는 것이 맞습니까?")
+            return
+        }
+
+        ticketItem.amount--
+
+        val info = WildTicketInfo(player.uniqueId, minutes)
+        info.start()
+        wildTicketUsing[player.uniqueId] = info
     }
 
     override fun toItemStack(): ItemStack {
@@ -42,6 +95,7 @@ class WildTicket : TicketAbstract(){
 
         fun start(){
             val player = Bukkit.getPlayer(uuid)?:return
+            timeBar.addPlayer(player)
             bossBarTaskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(DVHSiegeItem.instance,
                 {
                     val duration = Duration.between(timestamp, LocalDateTime.now())

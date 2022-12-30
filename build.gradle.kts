@@ -50,3 +50,57 @@ tasks.withType<ProcessResources>{
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
+
+tasks.register("단츄", Jar::class){
+    group = "!danvhae"
+    description = "의존성 모음집에 버전명 없이 파일을 내보냅니다"
+    //dependsOn(listOf("jar", "build"))
+
+    dependsOn("build")//.mustRunAfter("clean")
+
+    from("build/classes/kotlin/main")
+    from("build/resources/main")
+
+    println("this is danchu task")
+    doFirst{
+        destinationDirectory.set(file(env.fetch("DEPEND_DIR")))
+        archiveFileName.set(rootProject.name + ".jar")
+    }
+
+}
+
+tasks.register("보라비", Jar::class){
+    group = "!danvhae"
+    description = "테스트 서버에 파일을 내보냅니다. 버전명 없이 내보냅니다."
+    //dependsOn(listOf("jar", "build"))
+
+    dependsOn("build")
+
+    from("build/classes/kotlin/main")
+    from("build/resources/main")
+
+    println("this is borav task")
+    doFirst{
+
+        destinationDirectory.set(file(env.fetch("PLUGIN_DIR")))
+        archiveFileName.set(rootProject.name + ".jar")
+
+    }
+
+}
+
+tasks.register("해야", Jar::class) {
+    group = "!danvhae"
+    description = "어딘가에 있는 일시 폴더에 버전명을 포함하여 내보냅니다."
+    //dependsOn(listOf("jar", "build"))
+    //dependsOn("clean")
+    dependsOn("build")//.mustRunAfter("clean")
+
+    from("build/classes/kotlin/main")
+    from("build/resources/main")
+
+    println("this is haeya task")
+    doFirst {
+        destinationDirectory.set(file(env.fetch("ARCHIVE_DIR")))
+    }
+}

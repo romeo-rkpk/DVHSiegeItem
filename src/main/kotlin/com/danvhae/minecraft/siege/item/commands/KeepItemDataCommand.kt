@@ -1,5 +1,6 @@
 package com.danvhae.minecraft.siege.item.commands
 
+import com.danvhae.minecraft.siege.core.utils.PermissionUtil
 import com.danvhae.minecraft.siege.item.objects.KeepItem
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -13,6 +14,7 @@ class KeepItemDataCommand : CommandExecutor {
         args: Array<out String>?
     ): Boolean {
         sender?:return false;args?:return false
+        if(!PermissionUtil.supportTeamOrConsole(sender))return false
         if(args.isEmpty())return false
         if(args[0] == "load") KeepItem.load()
 

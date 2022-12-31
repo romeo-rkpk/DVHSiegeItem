@@ -96,6 +96,7 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
                         "의문의 보너스 시간 ${duration.seconds}초 부여 중..."
                     }else{
                         var seconds = max(allowedMinutes * 60 - duration.seconds, 0)
+                        timeBar.progress = seconds.toDouble() / (allowedMinutes * 60)
                         var minutes = seconds / 60; seconds%=60
                         val hours = minutes / 60; minutes %=60
                         "야생에서 보낼 수 있는 시간... %s%s%s".format(
@@ -111,8 +112,8 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
             player.teleport(Bukkit.getWorld(DVHSiegeCore.masterConfig.wildWorldName)!!.spawnLocation)
             mainTaskID = Bukkit.getScheduler().runTaskLater(DVHSiegeItem.instance,
                 {
-                    bossBarTaskID?.let { Bukkit.getScheduler().cancelTask(it) }
-                    mainTaskID?.let { Bukkit.getScheduler().cancelTask(it) }
+                    abort()
+                    wildTicketUsing.remove(uuid)
                     player.teleport(DVHSiegeCore.masterConfig.meetingRoom.toLocation()!!)
                 }
                 , allowedMinutes.toLong() * 60 * 20 ).taskId

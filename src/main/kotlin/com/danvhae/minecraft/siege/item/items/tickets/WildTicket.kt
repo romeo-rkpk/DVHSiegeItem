@@ -37,7 +37,7 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
             return listOf(
                 TextUtil.toColor("&f야생으로 이동합니다."),
                 TextUtil.toColor("&7&o 잘 다녀오세요"),
-                TextUtil.toColor("&7${minute}분 머무를 수 있는 티켓"),
+                TextUtil.toColor("&7야생에서 ${minute}분 머무를 수 있는 티켓"),
                 TextUtil.toColor("")
             )
         }
@@ -109,7 +109,7 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
 
 
             player.teleport(Bukkit.getWorld(DVHSiegeCore.masterConfig.wildWorldName)!!.spawnLocation)
-            timeBar.removeAll()
+            //timeBar.removeAll()
             mainTaskID = Bukkit.getScheduler().runTaskLater(DVHSiegeItem.instance,
                 {
                     bossBarTaskID?.let { Bukkit.getScheduler().cancelTask(it) }

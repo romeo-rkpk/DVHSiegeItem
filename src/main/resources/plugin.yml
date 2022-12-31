@@ -16,3 +16,6 @@ commands:
     description: 각종 티켓 생성 및 지급 명령어
   exp-coin:
     description: 경험치 코인 지급 명령어
+
+  siege-keep-item:
+    description: 보존 아이템 관리 명령어

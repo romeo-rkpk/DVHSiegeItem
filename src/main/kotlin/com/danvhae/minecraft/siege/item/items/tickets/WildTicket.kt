@@ -112,6 +112,7 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
             mainTaskID = Bukkit.getScheduler().runTaskLater(DVHSiegeItem.instance,
                 {
                     bossBarTaskID?.let { Bukkit.getScheduler().cancelTask(it) }
+                    mainTaskID?.let { Bukkit.getScheduler().cancelTask(it) }
                     player.teleport(DVHSiegeCore.masterConfig.meetingRoom.toLocation()!!)
                 }
                 , allowedMinutes.toLong() * 60 * 20 ).taskId

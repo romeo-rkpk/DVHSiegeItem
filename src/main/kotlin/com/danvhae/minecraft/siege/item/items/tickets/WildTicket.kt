@@ -109,7 +109,6 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
 
 
             player.teleport(Bukkit.getWorld(DVHSiegeCore.masterConfig.wildWorldName)!!.spawnLocation)
-            //timeBar.removeAll()
             mainTaskID = Bukkit.getScheduler().runTaskLater(DVHSiegeItem.instance,
                 {
                     bossBarTaskID?.let { Bukkit.getScheduler().cancelTask(it) }

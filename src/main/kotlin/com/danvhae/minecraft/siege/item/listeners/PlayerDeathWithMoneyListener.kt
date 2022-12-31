@@ -7,13 +7,14 @@ import com.danvhae.minecraft.siege.item.items.Cheque
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
 import org.bukkit.event.entity.PlayerDeathEvent
 import java.util.Random
 import kotlin.math.min
 import kotlin.math.tanh
 
 
-class PlayerDeathWithMoneyListener {
+class PlayerDeathWithMoneyListener :Listener{
 
     private val config:MoneyConfig = MoneyConfig.load()
 

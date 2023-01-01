@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack
 import java.time.Duration
 import java.time.LocalDateTime
 import java.util.UUID
+import kotlin.math.abs
 import kotlin.math.max
 
 class WildTicket(val minutes:Int) : TicketAbstract(){
@@ -92,10 +93,26 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
             bossBarTaskID = Bukkit.getScheduler().scheduleSyncRepeatingTask(DVHSiegeItem.instance,
                 {
                     val duration = Duration.between(timestamp, LocalDateTime.now())
+                    /*
                     timeBar.title = if(duration.isNegative){
                         "의문의 보너스 시간 ${duration.seconds}초 부여 중..."
                     }else{
                         var seconds = max(allowedMinutes * 60 - duration.seconds, 0)
+                        timeBar.progress = seconds.toDouble() / (allowedMinutes * 60)
+                        var minutes = seconds / 60; seconds%=60
+                        val hours = minutes / 60; minutes %=60
+                        "야생에서 보낼 수 있는 시간... %s%s%s".format(
+                            if(hours > 0) "${hours}시간 " else "",
+                            if(minutes > 0) "${minutes}분 " else "",
+                            "${seconds}초"
+                        )
+                    }
+
+                     */
+                    var seconds = allowedMinutes * 60 - duration.seconds
+                    timeBar.title = if(seconds < 0){
+                        "의문의 보너스 시간 ${abs(seconds)}초 부여 중..."
+                    }else{
                         timeBar.progress = seconds.toDouble() / (allowedMinutes * 60)
                         var minutes = seconds / 60; seconds%=60
                         val hours = minutes / 60; minutes %=60

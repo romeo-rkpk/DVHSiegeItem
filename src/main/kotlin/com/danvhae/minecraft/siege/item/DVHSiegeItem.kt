@@ -1,6 +1,7 @@
 package com.danvhae.minecraft.siege.item
 
 import com.danvhae.minecraft.siege.item.commands.*
+import com.danvhae.minecraft.siege.item.completers.HealthItemCompleter
 import com.danvhae.minecraft.siege.item.completers.MoneyCompleter
 import com.danvhae.minecraft.siege.item.completers.SpellItemCompleter
 import com.danvhae.minecraft.siege.item.completers.TicketCompleter
@@ -43,6 +44,9 @@ class DVHSiegeItem : JavaPlugin(){
         getCommand("스타").executor = MoneyCommand()
         getCommand("스타").tabCompleter = MoneyCompleter()
         getCommand("siege-keep-item").executor = KeepItemDataCommand()
+
+        getCommand("health-care").executor = HealthCareItemCommand()
+        getCommand("health-care").tabCompleter = HealthItemCompleter()
 
         try {
             KeepItem.load()

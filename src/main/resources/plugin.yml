@@ -19,3 +19,5 @@ commands:
 
   siege-keep-item:
     description: 보존 아이템 관리 명령어
+  health-care:
+    description: just health care

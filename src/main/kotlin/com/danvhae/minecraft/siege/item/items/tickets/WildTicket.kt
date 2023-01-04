@@ -15,9 +15,8 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.time.Duration
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 import kotlin.math.abs
-import kotlin.math.max
 
 class WildTicket(val minutes:Int) : TicketAbstract(){
     companion object{

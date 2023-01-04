@@ -1,11 +1,9 @@
 package com.danvhae.minecraft.siege.item.listeners
 
 import com.danvhae.minecraft.siege.core.utils.FileUtil
-import com.danvhae.minecraft.siege.core.utils.TextUtil
 import com.danvhae.minecraft.siege.item.abstracts.TicketAbstract
 import com.danvhae.minecraft.siege.item.items.tickets.WorkTicket
 import com.danvhae.minecraft.siege.item.objects.KeepItem
-import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.PlayerDeathEvent

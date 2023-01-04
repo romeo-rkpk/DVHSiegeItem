@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.PlayerDeathEvent
-import java.util.Random
+import java.util.*
 import kotlin.math.min
 import kotlin.math.tanh
 

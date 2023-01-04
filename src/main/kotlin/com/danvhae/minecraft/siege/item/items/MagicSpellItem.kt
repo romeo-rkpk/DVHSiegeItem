@@ -9,7 +9,7 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.time.Duration
 import java.time.LocalDateTime
-import java.util.UUID
+import java.util.*
 import kotlin.math.max
 
 internal class MagicSpellItem(val name:String, val lore:List<String>, val skillID:String, val coolTime:Int,

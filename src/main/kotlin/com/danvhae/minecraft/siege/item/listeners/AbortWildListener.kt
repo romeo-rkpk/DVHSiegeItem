@@ -7,6 +7,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
+import org.bukkit.event.player.PlayerRespawnEvent
 import org.bukkit.event.player.PlayerTeleportEvent
 
 class AbortWildListener : Listener {
@@ -21,8 +22,19 @@ class AbortWildListener : Listener {
     @EventHandler
     fun onPlayerDeath(event:PlayerDeathEvent){
         val player = event.entity
-        if(player.location.world.name == DVHSiegeCore.masterConfig.wildWorldName)
+        if(player.location.world.name == DVHSiegeCore.masterConfig.wildWorldName) {
             WildTicket.abortWhenUsing(player)
+            WildTicket.deathNote.add(player.uniqueId)
+        }
+    }
+
+    @EventHandler
+    fun onPlayerRespawn(event:PlayerRespawnEvent){
+        val player = event.player
+        if(player.uniqueId !in WildTicket.deathNote)return
+
+        WildTicket.deathNote.remove(player.uniqueId)
+        event.respawnLocation = DVHSiegeCore.masterConfig.meetingRoom.toLocation()!!
     }
 
     @EventHandler

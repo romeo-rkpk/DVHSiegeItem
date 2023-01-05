@@ -25,6 +25,7 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
         private val regex = Regex("야생에서 (\\d+)분 머무를 수 있는 티켓")
 
         private val wildTicketUsing = HashMap<UUID, WildTicketInfo>()
+        internal val deathNote = HashSet<UUID>()
 
         fun abortWhenUsing(player:Player){
             wildTicketUsing[player.uniqueId]?.let {

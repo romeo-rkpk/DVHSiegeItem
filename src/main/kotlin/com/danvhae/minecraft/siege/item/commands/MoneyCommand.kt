@@ -58,6 +58,7 @@ class MoneyCommand : CommandExecutor {
                 val cheque = Cheque(amount)
                 if(player.inventory.firstEmpty() == -1){
                     for(stack in player.inventory){
+                        stack?:continue
                         if(stack.isSimilar(cheque.toItemStack())  && stack.amount < stack.maxStackSize)
                             break
                     }

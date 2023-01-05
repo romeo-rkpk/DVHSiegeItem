@@ -47,12 +47,12 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
 
         fun parseItem(stack:ItemStack?): WildTicket?{
             stack?.let{if(it.type != TYPE)return null}?:return null
-            val meta = stack.itemMeta
-            meta.lore.let {
+            val meta = stack.itemMeta?:return null
+            meta.lore?.let {
                 if(it.size != lore(0).size) return null
                 val (minutes) = regex.find(ChatColor.stripColor(it[MINUTE_LINE]))?.destructured?:return null
                 return WildTicket(minutes.toIntOrNull()?:return null)
-            }
+            }?:return null
         }
 
     }

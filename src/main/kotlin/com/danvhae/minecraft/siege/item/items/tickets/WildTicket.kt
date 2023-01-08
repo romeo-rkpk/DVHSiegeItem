@@ -1,10 +1,13 @@
 package com.danvhae.minecraft.siege.item.items.tickets
 
 import com.danvhae.minecraft.siege.core.DVHSiegeCore
+import com.danvhae.minecraft.siege.core.utils.FileUtil
 import com.danvhae.minecraft.siege.core.utils.TextUtil
 import com.danvhae.minecraft.siege.item.DVHSiegeItem
 import com.danvhae.minecraft.siege.item.abstracts.TicketAbstract
 import com.danvhae.minecraft.siege.item.utils.ItemUtil
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Material
@@ -26,6 +29,21 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
 
         private val wildTicketUsing = HashMap<UUID, WildTicketInfo>()
         internal val deathNote = HashSet<UUID>()
+
+        private const val FILE_NAME = "wildDeathNote.json"
+
+        internal fun load(){
+            deathNote.clear()
+            Gson().fromJson(FileUtil.readTextFile(FILE_NAME)?:"[]", Array<UUID>::class.java).let {
+                it.forEach { uuid-> deathNote.add(uuid) }
+            }
+        }
+
+        internal fun save(){
+            deathNote.toTypedArray().let {
+                FileUtil.writeTextFile(GsonBuilder().setPrettyPrinting().create().toJson(it), FILE_NAME)
+            }
+        }
 
         fun abortWhenUsing(player:Player){
             wildTicketUsing[player.uniqueId]?.let {

@@ -5,6 +5,7 @@ import com.danvhae.minecraft.siege.item.completers.HealthItemCompleter
 import com.danvhae.minecraft.siege.item.completers.MoneyCompleter
 import com.danvhae.minecraft.siege.item.completers.SpellItemCompleter
 import com.danvhae.minecraft.siege.item.completers.TicketCompleter
+import com.danvhae.minecraft.siege.item.items.tickets.WildTicket
 import com.danvhae.minecraft.siege.item.listeners.*
 import com.danvhae.minecraft.siege.item.objects.KeepItem
 import org.bukkit.Bukkit
@@ -51,6 +52,9 @@ class DVHSiegeItem : JavaPlugin(){
 
         try {
             KeepItem.load()
+            Bukkit.getLogger().info("보존 아이템 정보를 불러왔습니다")
+            WildTicket.load()
+            Bukkit.getLogger().info("야생 티켓 정보를 불러왔습니다.")
         }catch (e:Exception){
             e.printStackTrace()
         }

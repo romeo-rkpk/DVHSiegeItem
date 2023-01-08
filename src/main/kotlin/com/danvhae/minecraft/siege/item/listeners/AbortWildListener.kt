@@ -25,6 +25,7 @@ class AbortWildListener : Listener {
         if(player.location.world.name == DVHSiegeCore.masterConfig.wildWorldName) {
             WildTicket.abortWhenUsing(player)
             WildTicket.deathNote.add(player.uniqueId)
+            WildTicket.save()
         }
     }
 

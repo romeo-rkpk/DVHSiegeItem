@@ -36,6 +36,7 @@ class AbortWildListener : Listener {
 
         WildTicket.deathNote.remove(player.uniqueId)
         event.respawnLocation = DVHSiegeCore.masterConfig.meetingRoom.toLocation()!!
+        WildTicket.save()
     }
 
     @EventHandler

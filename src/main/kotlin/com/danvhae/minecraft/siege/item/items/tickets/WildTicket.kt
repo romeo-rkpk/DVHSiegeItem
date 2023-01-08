@@ -63,6 +63,11 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
             player.sendMessage("정말 티켓을 가지고 있는 것이 맞습니까?")
             return
         }
+        if(player.world.name == DVHSiegeCore.masterConfig.wildWorldName){
+            player.sendMessage("야생 티켓을 사용할 수 없습니다")
+            player.sendMessage("....이미 야생에 있습니다.")
+            return
+        }
         ticketItem.amount--
 
         val info = WildTicketInfo(player.uniqueId, minutes)

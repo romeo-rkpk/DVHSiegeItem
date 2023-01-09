@@ -2,12 +2,17 @@ package com.danvhae.minecraft.siege.item.items.tickets
 
 import com.danvhae.minecraft.siege.core.enums.SiegeCastleStatus
 import com.danvhae.minecraft.siege.core.objects.SiegeCastle
+import com.danvhae.minecraft.siege.core.objects.SiegeOperator
 import com.danvhae.minecraft.siege.core.objects.SiegePlayer
 import com.danvhae.minecraft.siege.item.abstracts.StarTicketAbstract
 import org.bukkit.entity.Player
 
 class WorkTicket(destination:SiegeCastle) : StarTicketAbstract(destination) {
     override fun useAndTeleport(player: Player) {
+        if(player.uniqueId.let { return@let it !in SiegePlayer && it !in SiegeOperator }){
+            player.sendMessage("귀하는 공성 플레이어가 아닙니다. 관리자에게 문의하십시오")
+            return
+        }
         if(destination.status !in listOf(SiegeCastleStatus.PEACEFUL, SiegeCastleStatus.UNDER_BATTLE))
             return
         //if(destination.team != SiegePlayer[player.uniqueId]?.team)

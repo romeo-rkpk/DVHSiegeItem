@@ -1,6 +1,8 @@
 package com.danvhae.minecraft.siege.item.items.tickets
 
 import com.danvhae.minecraft.siege.core.DVHSiegeCore
+import com.danvhae.minecraft.siege.core.objects.SiegeOperator
+import com.danvhae.minecraft.siege.core.objects.SiegePlayer
 import com.danvhae.minecraft.siege.core.utils.FileUtil
 import com.danvhae.minecraft.siege.core.utils.TextUtil
 import com.danvhae.minecraft.siege.item.DVHSiegeItem
@@ -75,7 +77,10 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
 
     }
     override fun useAndTeleport(player: Player) {
-
+        if(player.uniqueId.let { return@let it !in SiegePlayer && it !in SiegeOperator }){
+            player.sendMessage("귀하는 공성 플레이어가 아닙니다. 관리자에게 문의하십시오")
+            return
+        }
         val ticketItem = ItemUtil.targetItem(player, toItemStack())
         if(ticketItem == null){
             player.sendMessage("정말 티켓을 가지고 있는 것이 맞습니까?")

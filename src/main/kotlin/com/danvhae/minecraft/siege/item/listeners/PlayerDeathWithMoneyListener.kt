@@ -1,8 +1,10 @@
 package com.danvhae.minecraft.siege.item.listeners
 
 import com.danvhae.minecraft.siege.core.DVHSiegeCore
+import com.danvhae.minecraft.siege.core.utils.EconomyUtil
 import com.danvhae.minecraft.siege.core.utils.FileUtil
 import com.danvhae.minecraft.siege.core.utils.TextUtil
+import com.danvhae.minecraft.siege.item.DVHSiegeItem
 import com.danvhae.minecraft.siege.item.items.Cheque
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -23,18 +25,20 @@ class PlayerDeathWithMoneyListener :Listener{
         val ratio = (0.5 * (1 + tanh(Random().nextGaussian())) / (Math.PI * 0.5))
             .let { r -> r * config.minRatio + (1 - r) * config.maxRatio }
 
-        val economy = DVHSiegeCore.economy!!
+        //val economy = DVHSiegeCore.economy!!
         val player = event.entity
         for(stack in player.inventory){
             val cheque = Cheque.parseItem(stack?:continue)?:continue
-            economy.depositPlayer(player, cheque.amount * stack.amount.toDouble())
+            //economy.depositPlayer(player, cheque.amount * stack.amount.toDouble())
+            EconomyUtil.deposit(player, cheque.amount * stack.amount, "사망으로 인한 수표 강제사용", DVHSiegeItem.instance!!)
             stack.amount = 0
         }
 
-        val dropAmount = min((economy.getBalance(player) * ratio).toInt(), config.maxAmount)
+        val dropAmount = min((EconomyUtil.balance(player) * ratio).toInt(), config.maxAmount)
         if(dropAmount <= 0) return
 
-        economy.withdrawPlayer(player, dropAmount.toDouble())
+        //economy.withdrawPlayer(player, dropAmount.toDouble())
+        EconomyUtil.withDraw(player, dropAmount, "사망으로 인한 수표 드랍", DVHSiegeItem.instance!!)
 
         val cheque = Cheque(dropAmount, TextUtil.toColor("&f&4%s&f&l가 주머니에서 흘린 &6&l돈이다.".format(player.name)) )
         player.location.let { loc -> loc.world.dropItem(loc, cheque.toItemStack()) }

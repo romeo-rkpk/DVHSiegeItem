@@ -1,7 +1,9 @@
 package com.danvhae.minecraft.siege.item.listeners
 
 import com.danvhae.minecraft.siege.core.DVHSiegeCore
+import com.danvhae.minecraft.siege.core.utils.EconomyUtil
 import com.danvhae.minecraft.siege.core.utils.NumberUtil
+import com.danvhae.minecraft.siege.item.DVHSiegeItem
 import com.danvhae.minecraft.siege.item.events.UseChequeEvent
 import com.danvhae.minecraft.siege.item.items.Cheque
 import org.bukkit.Bukkit
@@ -27,7 +29,8 @@ class ChequeListener : Listener {
         if(stack.amount == 0)return
         stack.amount -= 1
 
-        DVHSiegeCore.economy!!.depositPlayer(event.player, cheque.amount.toDouble())
+        //DVHSiegeCore.economy!!.depositPlayer(event.player, cheque.amount.toDouble())
+        EconomyUtil.deposit(event.player, cheque.amount, "수표 사용", DVHSiegeItem.instance!!)
         event.player.sendMessage("수표를 사용하여 ${amount}(${NumberUtil.numberToHangul(amount)})스타" +
                 "를 얻었습니다.")
     }

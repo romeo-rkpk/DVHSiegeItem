@@ -60,8 +60,9 @@ class WorkTicket(destination:SiegeCastle) : StarTicketAbstract(destination) {
                     player.sendMessage("${destination.name} 일꾼 텔레포트 지점으로 이동하였습니다")
                 }, DELAY_TICK.toLong()).taskId
                 TASK_ID[player.uniqueId] = id
+                return
             }
-            return
+
         }
         player.teleport(destination.workPosition)
         player.sendMessage("${destination.name} 일꾼 텔레포트 지점으로 이동하였습니다")

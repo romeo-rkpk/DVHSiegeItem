@@ -40,19 +40,11 @@ class WorkTicket(destination:SiegeCastle) : StarTicketAbstract(destination) {
                 return@useAndTeleport
             }
         }
-        val sPlayer = SiegePlayer[player.uniqueId]
-        if(sPlayer != null){
-            var founded = false
-            for(c in LocationUtil.locationAtStars(player.location)){
-                if(c.status in listOf(SiegeCastleStatus.PEACEFUL, SiegeCastleStatus.UNDER_BATTLE) && c.team != sPlayer.team){
-                    founded = true
-                    break
-                }
-            }
 
-            if(founded){
 
-                //player.sendMessage("제약 조건 발동")
+        /*
+        //player.sendMessage("제약 조건 발동")
+                player.sendMessage("${DELAY_TICK / 20}초 뒤 이동합니다. 움직이면 귀환이 취소됩니다.")
                 val id = Bukkit.getScheduler().runTaskLater(DVHSiegeItem.instance, {
                     player.teleport(destination.workPosition)
                     TASK_ID.remove(player.uniqueId)
@@ -61,9 +53,20 @@ class WorkTicket(destination:SiegeCastle) : StarTicketAbstract(destination) {
                 }, DELAY_TICK.toLong()).taskId
                 TASK_ID[player.uniqueId] = id
                 return
-            }
+         */
 
+        if(LocationUtil.attacking(player)){
+            player.sendMessage("${DELAY_TICK / 20}초 뒤 이동합니다. 움직이면 귀환이 취소됩니다.")
+            val id = Bukkit.getScheduler().runTaskLater(DVHSiegeItem.instance, {
+                player.teleport(destination.workPosition)
+                TASK_ID.remove(player.uniqueId)
+                //player.sendMessage("귀환 완료")
+                player.sendMessage("${destination.name} 일꾼 텔레포트 지점으로 이동하였습니다")
+            }, DELAY_TICK.toLong()).taskId
+            TASK_ID[player.uniqueId] = id
+            return
         }
+
         player.teleport(destination.workPosition)
         player.sendMessage("${destination.name} 일꾼 텔레포트 지점으로 이동하였습니다")
 

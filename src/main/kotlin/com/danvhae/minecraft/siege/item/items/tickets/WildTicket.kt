@@ -4,6 +4,7 @@ import com.danvhae.minecraft.siege.core.DVHSiegeCore
 import com.danvhae.minecraft.siege.core.objects.SiegeOperator
 import com.danvhae.minecraft.siege.core.objects.SiegePlayer
 import com.danvhae.minecraft.siege.core.utils.FileUtil
+import com.danvhae.minecraft.siege.core.utils.LocationUtil
 import com.danvhae.minecraft.siege.core.utils.TextUtil
 import com.danvhae.minecraft.siege.item.DVHSiegeItem
 import com.danvhae.minecraft.siege.item.abstracts.TicketAbstract
@@ -89,6 +90,9 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
         if(player.world.name == DVHSiegeCore.masterConfig.wildWorldName){
             player.sendMessage("야생 티켓을 사용할 수 없습니다")
             player.sendMessage("....이미 야생에 있습니다.")
+            return
+        }else if(LocationUtil.attacking(player)){
+            player.sendMessage("야생으로 퇴각할 수 없습니다!")
             return
         }
         ticketItem.amount--

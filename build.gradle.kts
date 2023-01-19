@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.danvhae.minecraft.siege.item"
-version = "1.6.1-a2"
+version = "1.7.0-a1"
 
 repositories {
     mavenCentral()

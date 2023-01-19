@@ -7,8 +7,10 @@ import com.danvhae.minecraft.siege.core.objects.SiegeOperator
 import com.danvhae.minecraft.siege.core.objects.SiegePlayer
 import com.danvhae.minecraft.siege.core.utils.Hangul
 import com.danvhae.minecraft.siege.core.utils.LocationUtil
+import com.danvhae.minecraft.siege.core.utils.TextUtil
 import com.danvhae.minecraft.siege.item.abstracts.StarTicketAbstract
 import com.danvhae.minecraft.siege.item.utils.ItemUtil
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 
 class AttackTicket(destination:SiegeCastle) : StarTicketAbstract(destination) {
@@ -31,6 +33,20 @@ class AttackTicket(destination:SiegeCastle) : StarTicketAbstract(destination) {
             return
         }
         ItemUtil.targetItem(player, toItemStack())?.let { it.amount-- }
+        SiegePlayer[player.uniqueId]?.let {
+            if(destination.team == it.team){
+                player.sendMessage(TextUtil.toColor("&c&l★50만 스타★&f가 &7&l우주의 먼지&f가 되었습니다."))
+
+                Bukkit.getServer().broadcastMessage(TextUtil.toColor(
+                    if(it.isOwner)
+                        "${player.name}가 &c&l>&6&l>&e&l> &a&l자신의 성 &b&l<&9&l<&5&l< &f을 &4&l공격&f중입니다! \n"
+                    else
+                        "${player.name}가 &4&l쿠데타&f를 계획한 것 같군요! 모두 ${player.name}의 용기에 커다란 환호와 박수 부탁드립니다!"
+                    )
+                )
+                return
+            }
+        }
         val hangul = Hangul(destination.name.last())
         player.sendMessage("${destination.name}%s 공격하러 갑니다".format(
             if(hangul.isHangul()){

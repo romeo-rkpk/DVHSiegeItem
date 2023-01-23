@@ -46,7 +46,10 @@ class MoneyCommand : CommandExecutor {
                     return true
                 }
 
-                val amount = args[1].toIntOrNull()
+                val amount:Int? = args[1].let {
+                    it.toIntOrNull()?:NumberUtil.hangulToNumber(it)?.toInt()
+                }
+
                 if(amount == null){
                     player.sendMessage("$PREFIX${TextUtil.toColor("&f$args[1] &c은(는) 올바른 금액이 아닙니다. 1 이상의 자연수를 입력해주세요.")}")
                     return false

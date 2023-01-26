@@ -1,10 +1,16 @@
 package com.danvhae.minecraft.siege.item.items.tickets
 
 import com.danvhae.minecraft.siege.core.DVHSiegeCore
+import com.danvhae.minecraft.siege.core.objects.SiegeOperator
+import com.danvhae.minecraft.siege.core.objects.SiegePlayer
+import com.danvhae.minecraft.siege.core.utils.FileUtil
+import com.danvhae.minecraft.siege.core.utils.LocationUtil
 import com.danvhae.minecraft.siege.core.utils.TextUtil
 import com.danvhae.minecraft.siege.item.DVHSiegeItem
 import com.danvhae.minecraft.siege.item.abstracts.TicketAbstract
 import com.danvhae.minecraft.siege.item.utils.ItemUtil
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Material
@@ -25,6 +31,22 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
         private val regex = Regex("야생에서 (\\d+)분 머무를 수 있는 티켓")
 
         private val wildTicketUsing = HashMap<UUID, WildTicketInfo>()
+        internal val deathNote = HashSet<UUID>()
+
+        private const val FILE_NAME = "wildDeathNote.json"
+
+        internal fun load(){
+            deathNote.clear()
+            Gson().fromJson(FileUtil.readTextFile(FILE_NAME)?:"[]", Array<UUID>::class.java).let {
+                it.forEach { uuid-> deathNote.add(uuid) }
+            }
+        }
+
+        internal fun save(){
+            deathNote.toTypedArray().let {
+                FileUtil.writeTextFile(GsonBuilder().setPrettyPrinting().create().toJson(it), FILE_NAME)
+            }
+        }
 
         fun abortWhenUsing(player:Player){
             wildTicketUsing[player.uniqueId]?.let {
@@ -46,20 +68,31 @@ class WildTicket(val minutes:Int) : TicketAbstract(){
 
         fun parseItem(stack:ItemStack?): WildTicket?{
             stack?.let{if(it.type != TYPE)return null}?:return null
-            val meta = stack.itemMeta
-            meta.lore.let {
+            val meta = stack.itemMeta?:return null
+            meta.lore?.let {
                 if(it.size != lore(0).size) return null
                 val (minutes) = regex.find(ChatColor.stripColor(it[MINUTE_LINE]))?.destructured?:return null
                 return WildTicket(minutes.toIntOrNull()?:return null)
-            }
+            }?:return null
         }
 
     }
     override fun useAndTeleport(player: Player) {
-
+        if(player.uniqueId.let { return@let it !in SiegePlayer && it !in SiegeOperator }){
+            player.sendMessage("귀하는 공성 플레이어가 아닙니다. 관리자에게 문의하십시오")
+            return
+        }
         val ticketItem = ItemUtil.targetItem(player, toItemStack())
         if(ticketItem == null){
             player.sendMessage("정말 티켓을 가지고 있는 것이 맞습니까?")
+            return
+        }
+        if(player.world.name == DVHSiegeCore.masterConfig.wildWorldName){
+            player.sendMessage("야생 티켓을 사용할 수 없습니다")
+            player.sendMessage("....이미 야생에 있습니다.")
+            return
+        }else if(LocationUtil.attacking(player)){
+            player.sendMessage("야생으로 퇴각할 수 없습니다!")
             return
         }
         ticketItem.amount--

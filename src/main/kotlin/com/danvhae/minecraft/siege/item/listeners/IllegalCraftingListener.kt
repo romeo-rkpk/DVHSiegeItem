@@ -20,7 +20,7 @@ class IllegalCraftingListener :Listener{
 
     @EventHandler
     fun onCraftingBanItem(event:PrepareItemCraftEvent){
-        if(event.recipe?.result?.type == Material.GOLD_SWORD)
+        if(event.recipe?.result?.type in setOf(Material.GOLD_SWORD, Material.BOW))
             event.inventory.result = null
     }
 

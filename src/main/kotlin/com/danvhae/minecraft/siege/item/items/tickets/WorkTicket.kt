@@ -9,7 +9,7 @@ import com.danvhae.minecraft.siege.item.DVHSiegeItem
 import com.danvhae.minecraft.siege.item.abstracts.StarTicketAbstract
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
-import java.util.UUID
+import java.util.*
 
 class WorkTicket(destination:SiegeCastle) : StarTicketAbstract(destination) {
 

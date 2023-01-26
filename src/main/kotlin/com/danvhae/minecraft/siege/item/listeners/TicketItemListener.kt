@@ -1,7 +1,6 @@
 package com.danvhae.minecraft.siege.item.listeners
 
 import com.danvhae.minecraft.siege.item.abstracts.TicketAbstract
-import com.danvhae.minecraft.siege.item.items.tickets.WildTicket
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
